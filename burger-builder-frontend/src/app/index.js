@@ -1,7 +1,7 @@
 import React from "react";
 
-import Layout from "./hoc/Layout";
-import BurderBuilder from "./containers/BurgerBuilder";
+import Layout from "../hoc/Layout";
+import BurderBuilder from "../containers/BurgerBuilder";
 
 function App() {
   return (
