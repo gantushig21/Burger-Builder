@@ -7,12 +7,11 @@ mongoose.Promise = global.Promise;
 let dbConnection = null;
 
 try {
-  dbConnection = mongoose.connect(constants.MONGO_URL, { useNewUrlParser: true });
-
   dbConnection = mongoose.connect(
     constants.MONGO_URL,
     {
       useNewUrlParser: true,
+      useUnifiedTopology: true
       // auth: {
       //   user: constants.MONGO_USER,
       //   password: constants.MONGO_PASS
@@ -22,6 +21,7 @@ try {
 } catch (error) {
   dbConnection = mongoose.createConnection(constants.MONGO_URL, {
     useNewUrlParser: true,
+    useUnifiedTopology: true
     // auth: {
     //   user: constants.MONGO_USER,
     //   password: constants.MONGO_PASS
