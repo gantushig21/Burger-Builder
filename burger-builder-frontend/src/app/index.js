@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import Layout from "../hoc/Layout";
 import BurderBuilder from "../containers/BurgerBuilder";
+import Checkout from '../containers/Checkout';
 
 class App extends Component {
   render() {
@@ -9,6 +10,7 @@ class App extends Component {
       <div>
         <Layout>
           <BurderBuilder />
+          <Checkout />
         </Layout>
       </div>
     );
