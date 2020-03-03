@@ -11,11 +11,60 @@ import axios from '../../../utils/axios';
 
 class ContactData extends Component {
     state = {
-        name: '',
-        email: '',
-        address: {
-            street: '',
-            postalCode: ''
+        orderForm: {
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Your name'
+                },
+                value: ''
+            },
+            street: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Street'
+                },
+                value: ''
+            },
+            zipCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'ZIP code'
+                },
+                value: ''
+            },
+            country: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    placeholder: 'Country'
+                },
+                value: ''
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    placeholder: 'Your email'
+                },
+                value: ''
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [{
+                        value: 'fastest',
+                        displayValue: 'Fastest'
+                    }, {
+                        value: 'cheapest',
+                        displayValue: 'Cheapest'
+                    }],
+                },
+                value: 'fastest'
+            }
         },
         loading: false
     }
@@ -23,47 +72,71 @@ class ContactData extends Component {
     orderHandler = (e) => {
         e.preventDefault();
 
-    const order = {
-      ingredients: this.props.ingredients,
-      price: this.props.price,
-      customer: {
-        name: 'Gantushig',
-        address: {
-          street: 'North street 1000',
-          zipCode: '52557',
-          country: 'USA'
-        },
-        email: 'gantushig21@gmail.com'
-      },
-      deliveryMethod: 'fastest',
-    };
+        const formData = {};
+        for (let formElementIdentifier in this.state.orderForm) {
+            formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value
+        }
 
-    this.setState({ loading: true });
-    axios.post('/orders', order)
-      .then(response => {
-        this.setState({ 
-          loading: false,
+        const order = {
+            ingredients: this.props.ingredients,
+            price: this.props.price,
+            orderData: formData
+        };
+
+        this.setState({ loading: true });
+        axios.post('/orders', order)
+        .then(response => {
+            this.setState({ 
+            loading: false,
+            });
+            this.props.history.push('/');
+        })
+        .catch(error => {
+            this.setState({ 
+            loading: false, 
+            });
+            this.props.history.push('/');
         });
-        this.props.history.push('/');
-      })
-      .catch(error => {
-        this.setState({ 
-          loading: false, 
+    }
+
+    inputChangedHandler = (e, inputIdentifier) => {
+        const { value } = e.target;
+        this.setState(prevState => {
+            return {
+                orderForm: {
+                    ...prevState.orderForm,
+                    [inputIdentifier]: {
+                        ...prevState.orderForm[inputIdentifier],
+                        value
+                    }
+                }    
+            }
         });
-        this.props.history.push('/');
-      });
     }
 
     render() {
-        if (JSON.stringify(this.props.ingredients) === JSON.stringify({}))
-            return <Redirect to="/"/>
+        // if (JSON.stringify(this.props.ingredients) === JSON.stringify({}))
+        //     return <Redirect to="/"/>
+
+        const formElementsArray = [];
+        for (let key in this.state.orderForm) {
+            formElementsArray.push({
+                id: key,
+                config: this.state.orderForm[key] 
+            });
+        }
 
         let form = (
-            <form>
-                <Input inputtype="input" type="text" name="name" placeholder="Your Name"/>
-                <Input inputtype="input" type="email" name="email" placeholder="Your Email"/>
-                <Input inputtype="input" type="text" name="street" placeholder="Street"/>
-                <Input inputtype="input" type="text" name="postal" placeholder="Postal Code"/>
+            <form onSubmit={this.orderHandler}>
+                {formElementsArray.map(formElement => (
+                    <Input 
+                        key={formElement.id}
+                        elementType={formElement.config.elementType} 
+                        elementConfig={formElement.config.elementConfig} 
+                        value={formElement.config.value}
+                        changed={e => this.inputChangedHandler(e, formElement.id)}
+                    />
+                ))}
                 <Button btnType="Success" clicked={this.orderHandler}>ORDER</Button>
             </form>
         );
