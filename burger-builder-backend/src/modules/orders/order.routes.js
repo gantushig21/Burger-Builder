@@ -7,6 +7,7 @@ import * as orderControllers from './order.controllers';
 
 const routes = new Router();
 
+routes.get('/', orderControllers.getOrders);
 routes.post('/', validate(orderValidations.orderBurger), orderControllers.orderBurger);
 
 export default routes;

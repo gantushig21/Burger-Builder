@@ -9,3 +9,13 @@ export async function orderBurger(req, res) {
         return res.status(500).json(err);
     }
 }
+
+export async function getOrders(req, res) {
+    try {
+        const orders = await Order.find();
+
+        return res.status(200).json(orders);
+    } catch (err) {
+        return res.status(500).json(err);
+    }
+}
