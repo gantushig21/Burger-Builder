@@ -2,7 +2,20 @@ import Order from './order.model';
 
 export async function orderBurger(req, res) {
     try {
-        const order = await Order.create(req.body);
+        const order = await Order.create({
+            ingredients: req.body.ingredients,
+            price: req.body.price,
+            customer: {
+                name: req.body.orderData.name,
+                address: {
+                    street: req.body.orderData.street,
+                    zipCode: req.body.orderData.zipCode,
+                    country: req.body.orderData.country
+                },
+                email: req.body.orderData.email
+            },
+            deliveryMethod: req.body.deliveryMethod
+        });
 
         return res.status(200).json(order);
     } catch (err) {

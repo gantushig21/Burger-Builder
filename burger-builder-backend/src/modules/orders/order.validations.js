@@ -24,37 +24,33 @@ export default {
                 .required(),
             price: Joi.number()
                 .required(),
-            customer: Joi.object().keys({
+            orderData: Joi.object().keys({
                 name: Joi.string()
                     .regex(textReg)
                     .required()
                     .error(functions.validationError),
-                address: Joi.object().keys({
-                    street: Joi.string()
-                        .regex(textReg)
-                        .required()
-                        .error(functions.validationError),
-                    zipCode: Joi.string()
-                        .regex(textReg)
-                        .required()
-                        .error(functions.validationError),
-                    country: Joi.string()
-                        .regex(textReg)
-                        .required()
-                        .error(functions.validationError)
-                })
-                    .required(),
+                street: Joi.string()
+                    .regex(textReg)
+                    .required()
+                    .error(functions.validationError),
+                zipCode: Joi.string()
+                    .regex(textReg)
+                    .required()
+                    .error(functions.validationError),
+                country: Joi.string()
+                    .regex(textReg)
+                    .required()
+                    .error(functions.validationError),
                 email: Joi.string()
                     .regex(emailReg)
                     .required()
+                    .error(functions.validationError),
+                deliveryMethod: Joi.string()
+                    .regex(engTextReg)
+                    .required()
                     .error(functions.validationError)
-                
-            })
-                .required(),
-            deliveryMethod: Joi.string()
-                .regex(engTextReg)
-                .required()
-                .error(functions.validationError)
+                })
+                    .required(),
         }
     }
 }
