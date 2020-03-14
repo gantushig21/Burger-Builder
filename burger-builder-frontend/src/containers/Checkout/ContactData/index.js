@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
 
 import withErrorHandler from '../../../hoc/WithErrorHandler';
+import axios from '../../../utils/axios';
 import ContactData from './ContactData';
-import * as actions from './actions';
+import * as actions from '../../Orders/actions';
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
-        price: state.totalPrice
+        ingredients: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        loading: state.orders.loading
     }
 }
 
@@ -17,4 +19,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps)(withErrorHandler(ContactData));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));

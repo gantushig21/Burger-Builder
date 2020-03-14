@@ -7,42 +7,27 @@ import axios from '../../utils/axios';
 import withErrorHandler from '../../hoc/WithErrorHandler';
 
 class Orders extends Component {
-    state = {
-        orders: [],
-        loading: false
-    }
-
     componentDidMount() {
-        this.setState({loading: true});
-        axios.get('/orders').then(response => {
-            this.setState({
-                loading: false, 
-                orders: response.data
-            });
-        }).catch(error => {
-            this.setState({loading: false});
-            console.log("Orders error");
-        }) 
+        this.props.getOrders();
     }
 
     render() {
         let orders = <Spinner />;
         
-        // if (!this.state.loading) {
-        //     this.state.orders.map((order) => {
+        if (!this.props.loading) {
+            orders = this.props.orders.map((order) => 
+                <Order 
+                    key={order._id} 
+                    ingredients={order.ingredients}
+                    price={order.price}
+                />
+            );
 
-        //     });
-        // }
+        }
 
         return (
             <div>
-                {this.state.orders.map((order) => 
-                    <Order 
-                        key={order._id} 
-                        ingredients={order.ingredients}
-                        price={order.price}
-                    />
-                )}
+                {orders}
             </div>
         );
     }

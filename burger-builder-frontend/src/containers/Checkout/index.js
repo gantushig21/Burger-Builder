@@ -5,7 +5,8 @@ import Checkout from './Checkout';
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients
+        ingredients: state.burgerBuilder.ingredients,
+        ordered: state.orders.ordered
     }
 }
 

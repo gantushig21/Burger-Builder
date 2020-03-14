@@ -95,8 +95,7 @@ class ContactData extends Component {
                 valid: true
             }
         },
-        formIsValid: false,
-        loading: false
+        formIsValid: false
     }
 
     orderHandler = (e) => {
@@ -114,8 +113,7 @@ class ContactData extends Component {
         };
 
         if (this.state.formIsValid) {
-            this.setState({ loading: true });
-            this.props.orderBurger(formData);
+            this.props.orderBurger(order);
         }
     }
 
@@ -163,9 +161,6 @@ class ContactData extends Component {
     }
 
     render() {
-        // if (JSON.stringify(this.props.ingredients) === JSON.stringify({}))
-        //     return <Redirect to="/"/>
-
         const formElementsArray = [];
         for (let key in this.state.orderForm) {
             formElementsArray.push({
@@ -192,7 +187,7 @@ class ContactData extends Component {
             </form>
         );
 
-        if (this.state.loading) 
+        if (this.props.loading) 
             form = <Spinner />
 
         return (

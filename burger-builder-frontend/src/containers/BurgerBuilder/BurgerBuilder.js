@@ -40,6 +40,7 @@ class BurgerBuilder extends Component {
   }
 
   purchaseContinueHandler() {
+    this.props.initOrder();
     this.props.history.push('/checkout');    
   }
 
