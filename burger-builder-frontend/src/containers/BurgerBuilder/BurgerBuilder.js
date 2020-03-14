@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import withErrorHandler from '../../hoc/WithErrorHandler';
 import Aux from "../../hoc/Aux";
 import Burger from "../../components/Burger";
 import BuildControls from "../../components/Burger/BuildControls";
@@ -17,17 +16,11 @@ class BurgerBuilder extends Component {
   }
 
   state = { 
-    purchasing: false,
-    loading: false,
-    error: false
+    purchasing: false
   };
 
   componentDidMount() {
-    // axios.get('/ingredients').then(response => {
-    //   this.setState({ ingredients: response.data });
-    // }).catch(err => {
-    //   this.setState({ error: true });
-    // });
+    this.props.getIngredients();
   }
 
   updatePurchaseState(ingredients) {
@@ -60,7 +53,7 @@ class BurgerBuilder extends Component {
     }
 
     let orderSummary = null;
-    let burger = this.state.error ? <p>Ingredients can't be loader</p> : <Spinner />;
+    let burger = this.props.error ? <p>Ingredients can't be loader</p> : <Spinner />;
 
     if (this.props.ingredients) {
       burger = (
@@ -83,9 +76,6 @@ class BurgerBuilder extends Component {
         purchaseContinued={this.purchaseContinueHandler}
       />;
     }
-    
-    if (this.state.loading)
-      orderSummary = <Spinner />
 
     return (
       <Aux>

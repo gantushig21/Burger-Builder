@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
 
+import withErrorHandler from '../../../hoc/WithErrorHandler';
 import ContactData from './ContactData';
+import * as actions from './actions';
 
 const mapStateToProps = state => {
     return {
@@ -9,4 +11,10 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = dispatch => {
+    return {
+        orderBurger: (orderData) => dispatch(actions.orderBurger(orderData))
+    }
+}
+
+export default connect(mapStateToProps)(withErrorHandler(ContactData));

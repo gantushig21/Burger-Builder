@@ -110,26 +110,12 @@ class ContactData extends Component {
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
-            orderData: {
-                
-            }
+            orderData: formData
         };
 
         if (this.state.formIsValid) {
             this.setState({ loading: true });
-            axios.post('/orders', order)
-            .then(response => {
-                this.setState({ 
-                loading: false,
-                });
-                this.props.history.push('/');
-            })
-            .catch(error => {
-                this.setState({ 
-                loading: false, 
-                });
-                this.props.history.push('/');
-            });
+            this.props.orderBurger(formData);
         }
     }
 

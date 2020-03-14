@@ -2,20 +2,22 @@ import { connect } from 'react-redux';
 
 import BurgerBuilder from "./BurgerBuilder";
 import withErrorHandler from '../../hoc/WithErrorHandler';
-import * as actionTypes from '../../store/actions';
 import axios from '../../utils/axios';
+import * as actions from './actions';
 
 const mapStateToProps = state => {
     return {
         ingredients: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        error: state.error
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (ingredientName) => dispatch({ type: actionTypes.ADD_INGREDIENT, ingredientName }),
-        onIngredientRemoved: (ingredientName) => dispatch({ type: actionTypes.REMOVE_INGREDIENT, ingredientName })
+        onIngredientAdded: (ingredientName) => dispatch(actions.addIngredient(ingredientName)),
+        onIngredientRemoved: (ingredientName) => dispatch(actions.removeIngredient(ingredientName)),
+        getIngredients: () => dispatch(actions.getIngredients())
     }
 }
 
