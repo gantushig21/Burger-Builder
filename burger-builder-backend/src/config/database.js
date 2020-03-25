@@ -11,7 +11,8 @@ try {
     constants.MONGO_URL,
     {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
+      useCreateIndex: true
       // auth: {
       //   user: constants.MONGO_USER,
       //   password: constants.MONGO_PASS
@@ -21,7 +22,8 @@ try {
 } catch (error) {
   dbConnection = mongoose.createConnection(constants.MONGO_URL, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
     // auth: {
     //   user: constants.MONGO_USER,
     //   password: constants.MONGO_PASS
