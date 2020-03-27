@@ -4,6 +4,13 @@ import Auth from './Auth';
 
 import * as actions from './actions';   
 
+const mapStateToProps = state => {
+    return {
+        loading: state.auth.loading,
+        error: state.auth.error
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         login: (data) => dispatch(actions.login(data)),
@@ -11,4 +18,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

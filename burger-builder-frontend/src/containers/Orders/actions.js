@@ -30,8 +30,9 @@ export const orderInit = () => {
     }
 }
 
-export const getOrders = () => {
+export const getOrders = (token) => {
     return dispatch => {
+        console.log(token);
         dispatch({
             type: actionTypes.GET_ORDERS_PENDING
         });

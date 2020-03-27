@@ -8,13 +8,14 @@ import withErrorHandler from '../../hoc/WithErrorHandler';
 const mapStateToProps = state => {
     return  {
         orders: state.orders.orders,
-        loading: state.orders.loading
+        loading: state.orders.loading,
+        token: state.auth.token
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        getOrders: () => dispatch(actions.getOrders())
+        getOrders: (token) => dispatch(actions.getOrders(token))
     }
 }
 

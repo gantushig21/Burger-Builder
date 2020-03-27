@@ -8,7 +8,7 @@ import withErrorHandler from '../../hoc/WithErrorHandler';
 
 class Orders extends Component {
     componentDidMount() {
-        this.props.getOrders();
+        this.props.getOrders(this.props.token);
     }
 
     render() {

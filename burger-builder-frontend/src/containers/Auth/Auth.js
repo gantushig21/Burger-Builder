@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Input from '../../components/UI/Input';
 import Button from '../../components/UI/Button';
+import Spinner from '../../components/UI/Spinner';
 
 import classes from './Auth.css';
 
@@ -141,7 +142,7 @@ class Auth extends Component {
             }
         }
 
-        const form = formElementsArray.map(formElement => (
+        let form = formElementsArray.map(formElement => (
             <Input 
                 key={formElement.id}
                 elementType={formElement.config.elementType} 
@@ -155,8 +156,19 @@ class Auth extends Component {
             />
         ));
 
+        if (this.props.loading)
+            form = <Spinner />
+
+        let errorMessage = null;
+        if (this.props.error) {
+            errorMessage = (
+                <p>{this.props.error}</p>
+            );
+        }
+
         return (
             <div className={classes.Auth}>
+                {errorMessage}
                 <form onSubmit={this.submitHandler}>
                     {form}
                     <Button 

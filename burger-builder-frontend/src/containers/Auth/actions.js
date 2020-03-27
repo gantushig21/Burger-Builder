@@ -1,6 +1,16 @@
 import * as actionTypes from '../../utils/actionsTypes';
 import axios from '../../utils/axios';
 
+export const checkAuthTimeout = expirationTime => {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch({
+                type: actionTypes.LOGOUT
+            });
+        }, expirationTime * 1000)
+    }
+}
+
 export const signUp = (data) => {
     return dispatch => {
         dispatch({
@@ -14,9 +24,9 @@ export const signUp = (data) => {
                 userId: response.data.data.user._id
             });
         }).catch(err => {
-            console.log("Failed: ", err);
             dispatch({
-                type: actionTypes.SIGN_UP_FAILED
+                type: actionTypes.SIGN_UP_FAILED,
+                error: err.response.data.message
             });
         });
     }
@@ -34,8 +44,8 @@ export const login = (data) => {
                 token: response.data.data.token,
                 userId: response.data.data.user._id
             });
+            dispatch(checkAuthTimeout(response.data.data.expiresIn));
         }).catch(err => {
-            console.log("Failed: ", err);
             dispatch({
                 type: actionTypes.LOGIN_FAILED
             });
