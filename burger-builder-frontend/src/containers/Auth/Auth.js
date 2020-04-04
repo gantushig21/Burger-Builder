@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import Input from '../../components/UI/Input';
 import Button from '../../components/UI/Button';
@@ -57,6 +58,13 @@ class Auth extends Component {
         },
         isSignup: true
         // formIsValid: false
+    }
+
+    componentDidMount() {
+        console.log("Hello");
+        if (!this.props.buildingBurger && this.props.authRedirectPath !== '/') {
+            this.props.setAuthRedirectPath("/");
+        }
     }
 
     submitHandler = (event) => {
@@ -165,6 +173,9 @@ class Auth extends Component {
                 <p>{this.props.error}</p>
             );
         }
+
+        if (this.props.isAuthenticated) 
+            return <Redirect to={this.props.authRedirectPath} />
 
         return (
             <div className={classes.Auth}>

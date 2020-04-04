@@ -5,12 +5,14 @@ import withErrorHandler from '../../hoc/WithErrorHandler';
 import axios from '../../utils/axios';
 import * as actions from './actions';
 import { orderInit } from '../Orders/actions';
+import { setAuthRedirectPath } from '../Auth/actions';
 
 const mapStateToProps = state => {
     return {
         ingredients: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        error: state.burgerBuilder.error
+        error: state.burgerBuilder.error,
+        isAuthenticated: state.auth.token !== null
     };
 }
 
@@ -19,7 +21,8 @@ const mapDispatchToProps = dispatch => {
         onIngredientAdded: (ingredientName) => dispatch(actions.addIngredient(ingredientName)),
         onIngredientRemoved: (ingredientName) => dispatch(actions.removeIngredient(ingredientName)),
         getIngredients: () => dispatch(actions.getIngredients()),
-        initOrder: () => dispatch(orderInit())
+        initOrder: () => dispatch(orderInit()),
+        setAuthRedirectPath: (path) => dispatch(setAuthRedirectPath(path))
     }
 }
 

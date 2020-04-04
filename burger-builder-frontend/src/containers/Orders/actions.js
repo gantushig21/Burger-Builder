@@ -1,14 +1,20 @@
 import * as actionTypes from '../../utils/actionsTypes';
 import axios from '../../utils/axios';
 
-export const orderBurger = orderData => {
+export const orderBurger = (orderData, token) => {
     return dispatch => {
         dispatch({
             type: actionTypes.ORDER_BURGER_PENDING
         });
 
-        axios.post('/orders', orderData)
-            .then(response => {
+        axios({
+            method: 'post',
+            url: '/orders', 
+            data: orderData,
+            headers: {
+                Authorization: token
+            }
+        }).then(response => {
                 dispatch({
                     type: actionTypes.ORDER_BURGER_SUCCESS,
                     orderId: response.data._id,
@@ -32,12 +38,17 @@ export const orderInit = () => {
 
 export const getOrders = (token) => {
     return dispatch => {
-        console.log(token);
         dispatch({
             type: actionTypes.GET_ORDERS_PENDING
         });
 
-        axios.get('/orders').then(response => {
+        axios({
+            method: 'get',
+            url: '/orders',
+            headers: {
+                Authorization: token
+            }
+        }).then(response => {
             dispatch({
                 type: actionTypes.GET_ORDERS_SUCCESS,
                 orders: response.data

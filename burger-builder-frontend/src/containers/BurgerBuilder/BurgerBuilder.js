@@ -32,11 +32,16 @@ class BurgerBuilder extends Component {
   }
 
   togglePurchaseHandler() {
-    this.setState(prevState => {
-      return {
-        purchasing: !prevState.purchasing
-      };
-    });
+    if (this.props.isAuthenticated) {    
+      this.setState(prevState => {
+        return {
+          purchasing: !prevState.purchasing
+        };
+      });
+    } else {
+      this.props.setAuthRedirectPath('/checkout');
+      this.props.history.push('/auth');
+    }
   }
 
   purchaseContinueHandler() {
@@ -67,6 +72,7 @@ class BurgerBuilder extends Component {
           purchaseable={this.updatePurchaseState(this.props.ingredients)}
           ordered={this.togglePurchaseHandler}
           price={this.props.price}
+          isAuthenticated={this.props.isAuthenticated}
         />
       </Aux>);
 

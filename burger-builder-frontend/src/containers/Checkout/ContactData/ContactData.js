@@ -113,7 +113,7 @@ class ContactData extends Component {
         };
 
         if (this.state.formIsValid) {
-            this.props.orderBurger(order);
+            this.props.orderBurger(order, this.props.token);
         }
     }
 
