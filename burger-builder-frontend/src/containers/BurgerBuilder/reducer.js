@@ -4,7 +4,8 @@ const initialState = {
     ingredients: null,
     totalPrice: 4,
     error: false,
-    building: false
+    building: false,
+    loading: false
 };
 
 const INGREDIENT_PRICES = {
@@ -36,18 +37,25 @@ const reducer = (state = initialState, action) => {
                 totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
                 building: true
             }
+        case actionType.GET_INGREDIENTS_PENDING: 
+            return {
+                ...state,
+                loading: true
+            }
         case actionType.GET_INGREDIENTS_SUCCESS: 
             return {
                 ...state,
                 ingredients: action.ingredients,
                 totalPrice: 4,
                 error: false,
-                building: false
+                building: false,
+                loading: false
             }
         case actionType.GET_INGREDIENTS_FAILED: {
             return {
                 ...state,
-                error: true
+                error: true,
+                loading: false
             }
         }
         default: {

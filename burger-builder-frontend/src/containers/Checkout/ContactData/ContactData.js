@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 
-import { Redirect } from 'react-router-dom';
-
 import Button from '../../../components/UI/Button';
 import Spinner from '../../../components/UI/Spinner';
 import Input from '../../../components/UI/Input';
 
 import classes from './ContactData.css';
-import axios from '../../../utils/axios';
 
 class ContactData extends Component {
     state = {
@@ -109,7 +106,8 @@ class ContactData extends Component {
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
-            orderData: formData
+            orderData: formData,
+            userId: this.props.userId
         };
 
         if (this.state.formIsValid) {

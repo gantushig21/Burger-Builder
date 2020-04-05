@@ -61,7 +61,6 @@ class Auth extends Component {
     }
 
     componentDidMount() {
-        console.log("Hello");
         if (!this.props.buildingBurger && this.props.authRedirectPath !== '/') {
             this.props.setAuthRedirectPath("/");
         }
@@ -117,7 +116,7 @@ class Auth extends Component {
         }
 
         if (rules.matchField) {
-            isValid = isValid && this.state.controls[rules.matchField].value == value;
+            isValid = isValid && this.state.controls[rules.matchField].value === value;
         }
 
         return isValid;
@@ -174,8 +173,9 @@ class Auth extends Component {
             );
         }
 
-        if (this.props.isAuthenticated) 
+        if (this.props.isAuthenticated) {
             return <Redirect to={this.props.authRedirectPath} />
+        }
 
         return (
             <div className={classes.Auth}>

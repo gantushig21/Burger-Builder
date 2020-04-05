@@ -17,6 +17,9 @@ export const removeIngredient = (name) => {
 
 export const getIngredients = () => {
     return dispatch => {
+        dispatch({
+            type: actionTypes.GET_INGREDIENTS_PENDING,
+        });
         axios.get('/ingredients').then(response => {
             dispatch({
                 type: actionTypes.GET_INGREDIENTS_SUCCESS,

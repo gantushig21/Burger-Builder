@@ -37,7 +37,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.GET_ORDERS_PENDING: 
             return {
                 ...state,
-                loading: false
+                loading: true
             }
 
         case actionTypes.GET_ORDERS_SUCCESS: 

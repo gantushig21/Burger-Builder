@@ -83,7 +83,6 @@ export const login = (data) => {
 
 export const authCheckState = () => {
     return dispatch => {
-        console.log("Checking Authentication");
         const token = localStorage.getItem('access-token');
         if (!token) {
             dispatch(logout());
