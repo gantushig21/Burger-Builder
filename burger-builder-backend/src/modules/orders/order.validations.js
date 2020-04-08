@@ -3,7 +3,8 @@ import Joi from 'joi';
 import {
     emailReg,
     engTextReg,
-    textReg
+    textReg,
+    idReg
 } from '../../utils/validations';
 
 import functions from '../../utils/functions';
@@ -23,6 +24,9 @@ export default {
             })
                 .required(),
             price: Joi.number()
+                .required(),
+            userId: Joi.string()
+                .regex(idReg)
                 .required(),
             orderData: Joi.object().keys({
                 name: Joi.string()

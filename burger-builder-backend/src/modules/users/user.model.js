@@ -1,8 +1,10 @@
 import mongoose, { Schema } from 'mongoose';
 import { hashSync, compareSync } from 'bcrypt-nodejs';
+import jwt from 'jsonwebtoken';
 
 import { emailReg } from '../../utils/validations';
 import messages from '../../utils/messages';
+import constants from '../../config/constants';
 
 const UserSchema = new Schema({
     email: {
@@ -32,7 +34,7 @@ UserSchema.pre("save", function(next) {
         this.password = this._hashPassword(this.password)
     }
 
-    return next();
+    return next( );
 });
 
 UserSchema.methods = {
@@ -41,6 +43,14 @@ UserSchema.methods = {
     },
     _hashPassword(password) {
         return hashSync(password);
+    },
+    createToken() {
+        const token = `JWT ${jwt.sign({
+            _id: this._id
+        },
+        constants.JWT_SECRET)}`;
+
+        return token;
     },
     toJSON() {
         return {

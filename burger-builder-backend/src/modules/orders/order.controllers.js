@@ -14,7 +14,8 @@ export async function orderBurger(req, res) {
                 },
                 email: req.body.orderData.email
             },
-            deliveryMethod: req.body.deliveryMethod
+            deliveryMethod: req.body.deliveryMethod,
+            userId: req.body.userId
         });
 
         return res.status(200).json(order);
@@ -25,7 +26,9 @@ export async function orderBurger(req, res) {
 
 export async function getOrders(req, res) {
     try {
-        const orders = await Order.find();
+        const orders = await Order.find({
+            userId: req.user._id
+        });
 
         return res.status(200).json(orders);
     } catch (err) {

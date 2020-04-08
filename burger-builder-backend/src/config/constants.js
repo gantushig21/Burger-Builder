@@ -5,6 +5,7 @@ const devConfig = {
   MONGO_URL: process.env.MONGO_URL_DEV,
   MONGO_USER: process.env.MONGO_USER_DEV,
   MONGO_PASS: process.env.MONGO_PASS_DEV,
+  USER_EXPIRATION_TIME: 300
 };
 
 const testConfig = {
@@ -12,6 +13,7 @@ const testConfig = {
   MONGO_URL: process.env.MONGO_URL_TEST,
   MONGO_USER: process.env.MONGO_USER_TEST,
   MONGO_PASS: process.env.MONGO_PASS_TEST,
+  USER_EXPIRATION_TIME: 300
 };
 
 const prodConfig = {
@@ -19,6 +21,7 @@ const prodConfig = {
   MONGO_URL: process.env.MONGO_URL_PROD,
   MONGO_USER: process.env.MONGO_USER_PROD,
   MONGO_PASS: process.env.MONGO_PASS_PROD,
+  USER_EXPIRATION_TIME: 300
 };
 
 const defaultConfig = {

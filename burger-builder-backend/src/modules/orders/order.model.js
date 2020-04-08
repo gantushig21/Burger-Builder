@@ -75,6 +75,11 @@ const OrderSchema = new Schema({
         type: CusmoterSchema,
         required: true
     },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     deliveryMethod: {
         type: String,
         default: 'fastest',
