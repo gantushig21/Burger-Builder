@@ -1,2 +1,3 @@
 /burger-builder-frontend/node_modules
 /burger-builder-backend/node_modules
+/burger-builder-backend/.env
