@@ -14,7 +14,7 @@ export async function orderBurger(req, res) {
                 },
                 email: req.body.orderData.email
             },
-            deliveryMethod: req.body.deliveryMethod,
+            deliveryMethod: req.body.orderData.deliveryMethod,
             userId: req.body.userId
         });
 

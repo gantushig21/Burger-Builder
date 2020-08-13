@@ -83,7 +83,7 @@ const OrderSchema = new Schema({
     deliveryMethod: {
         type: String,
         default: 'fastest',
-        enum: ['fastest']
+        enum: ['fastest', 'cheapest']
     }
 });
 

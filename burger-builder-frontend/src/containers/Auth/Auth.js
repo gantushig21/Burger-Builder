@@ -44,7 +44,7 @@ class Auth extends Component {
                     type: 'password',
                     placeholder: 'Confirm Password'
                 },
-                hide: false,
+                hide: true,
                 value: '',
                 validation: {
                     required: true,
@@ -56,7 +56,7 @@ class Auth extends Component {
                 touched: false
             }
         },
-        isSignup: true
+        isSignup: false
         // formIsValid: false
     }
 
@@ -169,7 +169,7 @@ class Auth extends Component {
         let errorMessage = null;
         if (this.props.error) {
             errorMessage = (
-                <p>{this.props.error}</p>
+                <p style={{color: "red"}}>{this.props.error}</p>
             );
         }
 

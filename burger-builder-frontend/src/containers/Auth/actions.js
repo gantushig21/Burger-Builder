@@ -40,13 +40,21 @@ export const signUp = (data) => {
                     token: response.data.data.token,
                     userId: response.data.data.user._id
                 });
-            } else {
                 dispatch(checkAuthTimeout(response.data.data.expiresIn));
+            } else {
+                console.log(response.data.message);
+                throw new Error(response.data.message);
             }
         }).catch(err => {
+            let message = "";
+            if (err.response) {
+                message = err.response.data.message;
+            } else if (err.message) {
+                message = err.message;
+            }
             dispatch({
                 type: actionTypes.SIGN_UP_FAILED,
-                error: err.response.data.message
+                error: message,
             });
         });
     }

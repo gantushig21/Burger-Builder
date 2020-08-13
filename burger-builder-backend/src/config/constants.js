@@ -5,7 +5,7 @@ const devConfig = {
   MONGO_URL: process.env.MONGO_URL_DEV,
   MONGO_USER: process.env.MONGO_USER_DEV,
   MONGO_PASS: process.env.MONGO_PASS_DEV,
-  USER_EXPIRATION_TIME: 300
+  USER_EXPIRATION_TIME: 1800
 };
 
 const testConfig = {

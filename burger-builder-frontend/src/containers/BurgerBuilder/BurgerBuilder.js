@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 
 import Aux from "../../hoc/Aux";
 import Burger from "../../components/Burger";
@@ -6,24 +6,16 @@ import BuildControls from "../../components/Burger/BuildControls";
 import Modal from "../../components/UI/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary";
 import Spinner from '../../components/UI/Spinner';
-class BurgerBuilder extends Component {
-  constructor(props) {
-    super(props);
 
-    this.updatePurchaseState = this.updatePurchaseState.bind(this);
-    this.togglePurchaseHandler = this.togglePurchaseHandler.bind(this);
-    this.purchaseContinueHandler = this.purchaseContinueHandler.bind(this);
-  }
+const BurgerBuilder = props => {
+  const { getIngredients } = props;
+  const [purchasing, setPurchasing] = useState(false);
 
-  state = { 
-    purchasing: false
-  };
+  useEffect(() => {
+    getIngredients();
+  }, [getIngredients]);
 
-  componentDidMount() {
-    this.props.getIngredients();
-  }
-
-  updatePurchaseState(ingredients) {
+  const updatePurchaseState = (ingredients) => {
     const sum = Object.keys(ingredients).reduce((sum, igKey) => {
       return sum + ingredients[igKey];
     }, 0);
@@ -31,27 +23,22 @@ class BurgerBuilder extends Component {
     return sum > 0;
   }
 
-  togglePurchaseHandler() {
-    if (this.props.isAuthenticated) {    
-      this.setState(prevState => {
-        return {
-          purchasing: !prevState.purchasing
-        };
-      });
+ const  togglePurchaseHandler = () => {
+    if (props.isAuthenticated) {    
+      setPurchasing(!purchasing);
     } else {
-      this.props.setAuthRedirectPath('/checkout');
-      this.props.history.push('/auth');
+      props.setAuthRedirectPath('/checkout');
+      props.history.push('/auth');
     }
   }
 
-  purchaseContinueHandler() {
-    this.props.initOrder();
-    this.props.history.push('/checkout');    
+  const purchaseContinueHandler = () => {
+    props.initOrder();
+    props.history.push('/checkout');    
   }
 
-  render() {
     const disabledInfo = {
-      ...this.props.ingredients
+      ...props.ingredients
     };
 
     for (let key in disabledInfo) {
@@ -59,44 +46,43 @@ class BurgerBuilder extends Component {
     }
 
     let orderSummary = null;
-    let burger = this.props.error ? <p>Ingredients can't be loader</p> : <Spinner />;
-    if (this.props.loading) burger = <Spinner />;
+    let burger = props.error ? <p>Ingredients can't be loader</p> : <Spinner />;
+    if (props.loading) burger = <Spinner />;
 
-    if (this.props.ingredients) {
+    if (props.ingredients) {
       burger = (
       <Aux>
-        <Burger ingredients={this.props.ingredients} />
+        <Burger ingredients={props.ingredients} />
         <BuildControls
-          ingredientAdded={ this.props.onIngredientAdded}
-          ingredientRemoved={this.props.onIngredientRemoved}
+          ingredientAdded={ props.onIngredientAdded}
+          ingredientRemoved={props.onIngredientRemoved}
           disabled={disabledInfo}
-          purchaseable={this.updatePurchaseState(this.props.ingredients)}
-          ordered={this.togglePurchaseHandler}
-          price={this.props.price}
-          isAuthenticated={this.props.isAuthenticated}
+          purchaseable={updatePurchaseState(props.ingredients)}
+          ordered={togglePurchaseHandler}
+          price={props.price}
+          isAuthenticated={props.isAuthenticated}
         />
       </Aux>);
 
       orderSummary = <OrderSummary 
-        ingredients={this.props.ingredients} 
-        price={this.props.price}
-        purchaseCanceled={this.togglePurchaseHandler}
-        purchaseContinued={this.purchaseContinueHandler}
+        ingredients={props.ingredients} 
+        price={props.price}
+        purchaseCanceled={togglePurchaseHandler}
+        purchaseContinued={purchaseContinueHandler}
       />;
     }
 
     return (
       <Aux>
         <Modal
-          show={this.state.purchasing}
-          modalClosed={this.togglePurchaseHandler}
+          show={purchasing}
+          modalClosed={togglePurchaseHandler}
         >
           {orderSummary}
         </Modal>
         {burger}
       </Aux>
     );
-  }
 }
 
 export default BurgerBuilder;
